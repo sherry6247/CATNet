@@ -44,6 +44,27 @@ class ScaledDotProductAttention(nn.Module):
         context = context + x
         return context, attention
 
+class ScaledDotProductAttention_dim1(nn.Module):
+    """Scaled dot-product attention mechanism."""
+
+    def __init__(self, attention_dropout=0.0):
+        super(ScaledDotProductAttention, self).__init__()
+        self.dropout = nn.Dropout(attention_dropout)
+        self.softmax = nn.Softmax(dim=1)
+
+    def forward(self, q, k, v, scale=None, attn_mask=None):
+        x = q
+        attention = torch.bmm(q, k.transpose(1, 2))
+        if scale:
+            attention = attention * scale
+        if attn_mask is not None:
+            attention = attention.masked_fill_(attn_mask, -np.inf)
+        attention = self.softmax(attention)
+        attention = self.dropout(attention)
+        context = torch.bmm(attention, v)
+        context = context + x
+        return context, attention
+
 class MultiHeadScaledDotProductAttention(nn.Module):
     ''' Scaled Dot-Product Attention '''
 
@@ -1619,7 +1640,7 @@ class AuxAttEncoder(nn.Module):
         self.relu = nn.ReLU()
         self.tanh = nn.Tanh()
         self.weight_layer = torch.nn.Linear(hidden_size, hidden_size)
-        self.att_func = ScaledDotProductAttention()
+        self.att_func = ScaledDotProductAttention_dim1()
 
     def forward(self, seq_aux_step, final_queries, options, mask):
         selection_aux = self.tanh(self.selection_layer(seq_aux_step))
