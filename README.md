@@ -1,11 +1,11 @@
-# HiTANet
+# CATTnet
 This is
- the code of HiTANet.
+ the code of CATTnet.
  ## Requirements
- pytorch == 1.3.1\
+ pytorch == 1.4.0\
  sklearn == 0.19.1
  ## Data
- The project contains a sample toy data named as hf_sample in data folder.
+ The project contains prepared data of MIMIC_III dataset and eICU dataset in data folder.
  ## Main Entrance
  train_eval.py\
  contains training and evaluation codes.
