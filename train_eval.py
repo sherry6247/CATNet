@@ -312,8 +312,8 @@ def parse_arguments(parser):
     parser.add_argument('--lr', type=float, default=1e-4, help='The learning rate(default is 1e-3)')
     parser.add_argument('--bs', type=int, default=10, help='The batch size of input(default is 10)')
     parser.add_argument('--max_epoch', type=int, default=50, help='The max epoch to train(default is 200)')
-    parser.add_argument('--seq_file', type=str, default='/home/lsc/models/med_code_pred/useLab_med_split_2predNDC_1/med_lab_note_data/seqFile/', help='The input file path')
-    parser.add_argument('--label_file', type=str, default='/home/lsc/models/med_code_pred/useLab_med_split_2predNDC_1/med_lab_note_data/labelFile/', help='The label file path')
+    parser.add_argument('--seq_file', type=str, default='./seqFile/', help='The input file path')
+    parser.add_argument('--label_file', type=str, default='./labelFile/', help='The label file path')
     parser.add_argument('--time_file', type=str, default='', help='The time file path')
     parser.add_argument('--out_file', type=str, help='The output file path')
     parser.add_argument('--gpu', help='use gpu to train.')
@@ -327,21 +327,7 @@ def parse_arguments(parser):
 # For real data set please contact the corresponding author
 
 if __name__ == '__main__':
-    # parameters
-    # batch_size = 50
-    # dropout_rate = 0.5
-    # L2_reg = 1e-3
-    # log_eps = 1e-8
-    # n_epoch = 20
-    # n_labels = 2  # binary classification
-    # visit_size = 256 # size of input embedding
-    # hidden_size = 256 # size of hidden layer
-    # gamma = 0.0 # setting for Focal Loss, when it's zero, it's equal to standard cross loss
-    # use_gpu = True
-    # layer = 1 # layer of Transformer
-    # model_choice = 'TransformerTime' # name of the proposed HiTANet in our paper    
-    # disease_list = ['hf_sample'] # name of the sample data set, you can place you own data set by following the same setting
-
+    
     parser = argparse.ArgumentParser()
     args = parse_arguments(parser)
     batch_size=args.bs
@@ -355,9 +341,8 @@ if __name__ == '__main__':
     gamma = 2 # setting for Focal Loss, when it's zero, it's equal to standard cross loss
     use_gpu = args.gpu
     layer = 1 # layer of Transformer
-    # Transformer_Fusion, Transformer_Fusion_aux_att, Transformer_Fusion_aux_att_gated, Transformer_Fusion_main_att, Transformer_Fusion_main_att_gated
-    # Transformer_Fusion_Transmain_att_gated, Transformer_Fusion_Transmain_selfatt_gated
-    # model_choice = 'Transformer_attentionFusion_Transmain_selfatt_gated'
+    
+    # model_choice = 'Transformer_attentionFusion_Transmain_selfatt_gated','Transformer_AllCodeLevelattentionFusion_Transmain_selfatt_gated'
     model_choice = args.model_choice
     
     model_file = eval(model_choice)
@@ -414,13 +399,6 @@ if __name__ == '__main__':
         log_file = output_file_path
         if not os.path.exists(log_file):
             os.makedirs(log_file)
-        # path = 'data/' + disease + '/model_inputs/'
-        # trianing_file = path + disease + '_training_new.pickle'
-        # validation_file = path + disease + '_validation_new.pickle'
-        # testing_file = path + disease + '_testing_new.pickle'
-
-        # dict_file = 'data/' + disease + '/' + disease + '_code2idx_new.pickle'
-        # code2id = pickle.load(open(dict_file, 'rb'))
         code2id = None
         # n_diag_codes = inputDim
 
