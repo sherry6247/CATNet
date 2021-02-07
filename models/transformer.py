@@ -631,6 +631,16 @@ class EncoderAttFusion_6(nn.Module):
         output_embed = att_output.sum(dim=1).view(batch_size, time_step, -1) + self.bias_embedding
         output_embed = output_embed + output_pos
         output = self.dropout_emb(output_embed)
+        # self_attention_mask = padding_mask(ind_pos, ind_pos)
+
+        # attentions = []
+        # outputs = []
+        # for encoder in self.encoder_layers:
+        #     output, attention = encoder(output, self_attention_mask)
+        #     attentions.append(attention)
+        #     outputs.append(output)
+        # weight = torch.softmax(self.weight_layer(outputs[-1]), dim=1)
+        # weight = weight * mask - 255 * (1 - mask)
 
         return output
 
@@ -649,6 +659,9 @@ class EncoderAttFusion_5(nn.Module):
                 dropout=0.0,
                 options=None):
         super(EncoderAttFusion_5, self).__init__()
+        # self.encoder_layers = nn.ModuleList(
+        #     [EncoderLayer(options['hidden_size'], options['hidden_size'], num_heads, options['hidden_size'], options['hidden_size'], dropout=0.1) for _ in
+        #     range(num_layers)])
         self.model_dim = model_dim
         self.pre_embedding_med = Embedding(vocab_size_med, model_dim)
         vocab_size_all = vocab_size_med+vocab_size_labtest+vocab_size_diag
@@ -691,6 +704,16 @@ class EncoderAttFusion_5(nn.Module):
         output_embed = att_output.sum(dim=1).view(batch_size, time_step, -1) + self.bias_embedding
         output_med = output_embed + output_pos
         output = self.dropout_emb(output_med)
+        # self_attention_mask = padding_mask(ind_pos, ind_pos)
+
+        # attentions = []
+        # outputs = []
+        # for encoder in self.encoder_layers:
+        #     output, attention = encoder(output, self_attention_mask)
+        #     attentions.append(attention)
+        #     outputs.append(output)
+        # weight = torch.softmax(self.weight_layer(outputs[-1]), dim=1)
+        # weight = weight * mask - 255 * (1 - mask)
         
         return output
 
