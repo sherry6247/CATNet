@@ -1,4 +1,4 @@
-# CATTnet
+# CATNet
 This is
  the code of CATTnet.
  ## Requirements
@@ -10,4 +10,4 @@ This is
  train_eval.py\
  contains training and evaluation codes.
  
- # CATTnet
+ # CATNet
