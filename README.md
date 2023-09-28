@@ -1,6 +1,6 @@
 # CATNet
 This is
- the code of CATTnet.
+ the code of CATNet.
  ## Requirements
  pytorch == 1.4.0\
  sklearn == 0.19.1
